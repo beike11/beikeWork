@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			body{
+				margin: 0;
+				padding: 0;
+			}
+			.picture{
+				text-align: center;
+			}
+			#container{
+				
+			}
+       
+		
+		</style>
+	</head>
+	<body>
+		
+		<div id="container" >
+       <div class="lightbox"></div>
+        <div  class="pop">
+			<h4>1111</h4>
+			<div class="picture">
+				<canvas name="showpdf" filepath="" ></canvas>
+			</div>
+             
+         </div>
+		 <div  class="pop">
+			 <h4>1111</h4>
+			<div class="picture">
+				<canvas name="showpdf" filepath="" ></canvas>
+			</div>
+		 	
+		 </div>
+		 <div  class="pop">
+			 <h4>1111</h4>
+			 <div class="picture">
+				<canvas name="showpdf" filepath=""></canvas>
+			 </div>
+		 </div>
+		 <div  class="pop">
+			 <h4>1111</h4>
+			<div class="picture">
+				<canvas name="showpdf" filepath=""></canvas>
+			</div>
+		 </div>
+		 <div  class="pop">
+			 <h4>1111</h4>
+			 <div class="picture">
+				<canvas name="showpdf" filepath=""></canvas>
+			</div>
+		 </div>
+		 <div  class="pop">
+			 <h4>1111</h4>
+			<div class="picture">
+				<canvas name="showpdf" filepath=""></canvas>
+			</div>
+		 </div>
+		 <div  class="pop">
+			 <h4>1111</h4>
+			<div class="picture">
+				<canvas name="showpdf" filepath=""></canvas>
+			</div>
+		 </div>
+		 <div  class="pop">
+			 <h4>1111</h4>
+			<div class="picture">
+				<canvas name="showpdf" filepath=""></canvas>
+			</div>
+		 </div>
+		 
+     </div>
+		
+		<script src="js/showPdf/build/pdf.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script>
+			window.onload = function(){
+				var pdfDivs = document.getElementsByName("showpdf");
+				for (var i = 0;i < pdfDivs.length; i++) {
+					var canvas = pdfDivs[i];
+					var url = "img/"+canvas.getAttribute("filepath");
+					showPdf(canvas,url,null);
+				}
+				
+			}
+			
+			function showPdf(canvas,url,docment) {
+					PDFJS.workerSrc = 'js/showPdf/build/pdf.worker.js';
+					var CSS_UNITS = 136 / 72;
+				
+					 PDFJS.getDocument({url:url,rangeChunkSize:65536*16}).then(function getPdfHelloWorld(pdf) {
+						// console.log(pdf)
+						pdf.getPage(1).then(function getPageHelloWorld(page) {
+							var scale = 1.0;
+							var viewport = page.getViewport(scale);
+							var context = canvas.getContext('2d');
+							canvas.height =  Math.floor(viewport.height * CSS_UNITS);
+							canvas.width =  Math.floor(viewport.width * CSS_UNITS);
+							canvas.style.border = "1px solid black"
+							var renderContext = {
+								transform: [CSS_UNITS, 0, 0, CSS_UNITS, 0,0],
+								canvasContext: context,
+								viewport: viewport
+							};
+							page.render(renderContext);
+						});
+					}).catch(function(reson){
+						console.log(reson);
+					});
+				}
+			
+		
+		</script>
+	</body>
+</html>
