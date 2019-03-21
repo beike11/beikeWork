@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title></title>
+	</head>
+	<body>
+			<div id = "main">
+				<input  name="" type="file" id="" multiple="multiple" accept="application/json" onchange="getData(event)"  value="" />
+			</div>
+			
+		<script src="js/jquery-2.1.0.js"></script>
+		<script src="js/JSONToExcel.js"></script>
+		<script type="text/javascript">
+			function getData(e){
+				var files = e.target.files;
+				for (var i = 0;i<files.length;i++) {
+					var file = files[i];
+					 var reader = new FileReader();
+					 reader.readAsText(file, "UTF-8");
+					 reader.fileName = file.name.substring(0,file.name.indexOf(".json"));
+					 reader.onload = function(evt){
+						 var fileString = evt.target.result;
+						 var name = evt.target.fileName
+						console.log(name);
+						 var fileJson = null;
+
+						 try{
+							 fileJson  = JSON.parse(fileString);
+						 }catch(e){
+							 alert(name+"数据错误");
+						 }
+						 if(fileJson!=null){
+							  JSONToExcelConvertor(fileJson,name); 
+						 }
+
+					 }
+				}
+			}
+			
+
+				
+			
+		</script>
+	</body>
+</html>
